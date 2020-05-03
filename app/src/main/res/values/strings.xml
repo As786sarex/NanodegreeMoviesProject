@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">NanodegreeMoviesProject</string>
+    <string name="movie_recycler_item_banner">Movie Banner</string>
+</resources>
