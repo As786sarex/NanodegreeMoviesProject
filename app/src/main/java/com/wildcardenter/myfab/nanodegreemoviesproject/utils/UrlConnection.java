@@ -14,19 +14,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.wildcardenter.myfab.nanodegreemoviesproject.utils.Constants.MOVIES_API_URL;
 import static com.wildcardenter.myfab.nanodegreemoviesproject.utils.Constants.REQUEST_METHOD_GET;
 
 public class UrlConnection {
 
     @Nullable
-    public static String loadMoviesFromUrl() {
+    public static String loadMoviesFromUrl(String url) {
         HttpURLConnection urlConnection = null;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
         StringBuilder buffer = new StringBuilder();
         try {
-            URL movieUrl = new URL(MOVIES_API_URL);
+            URL movieUrl = new URL(url);
             urlConnection = (HttpURLConnection) movieUrl.openConnection();
             urlConnection.setRequestMethod(REQUEST_METHOD_GET);
             urlConnection.setConnectTimeout(10000);

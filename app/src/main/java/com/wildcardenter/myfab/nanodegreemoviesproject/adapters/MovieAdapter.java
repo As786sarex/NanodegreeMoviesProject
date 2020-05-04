@@ -18,15 +18,19 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.wildcardenter.myfab.nanodegreemoviesproject.R;
 import com.wildcardenter.myfab.nanodegreemoviesproject.models.Movie;
 
 import java.util.List;
 
+import static com.wildcardenter.myfab.nanodegreemoviesproject.utils.Constants.IMAGE_URL_PREFIX;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private Context mContext;
     private List<Movie> movies;
+    private OnMovieClickListener listener;
 
     public MovieAdapter(Context mContext) {
         this.mContext = mContext;
@@ -47,21 +51,44 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         if (movies != null) {
-
+            Movie movie = movies.get(position);
+            if (movie.getPosterPath() != null) {
+                Picasso.get()
+                        .load(IMAGE_URL_PREFIX + movie.getPosterPath())
+                        .into(holder.movieItemBannerImg);
+            }
         }
     }
+
+
+    public void setOnMovieClickListener(OnMovieClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnMovieClickListener {
+        void onClick(int position);
+    }
+
 
     @Override
     public int getItemCount() {
         return movies == null ? 0 : movies.size();
     }
 
-    static class MovieViewHolder extends RecyclerView.ViewHolder {
+    class MovieViewHolder extends RecyclerView.ViewHolder {
         ImageView movieItemBannerImg;
+        View itemContainer;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             movieItemBannerImg = itemView.findViewById(R.id.movie_item_banner_img);
+            itemView.findViewById(R.id.movies_grid_card).setOnClickListener(i -> {
+                if (listener != null) {
+                    int pos = getAdapterPosition();
+                    listener.onClick(pos);
+                }
+            });
         }
+
     }
 }

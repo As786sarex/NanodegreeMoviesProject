@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">NanodegreeMoviesProject</string>
     <string name="movie_recycler_item_banner">Movie Banner</string>
+    <string name="sort_by_most_popular">Popularity</string>
+    <string name="sort_by_rating">Rating</string>
+    <string name="detail_error_message">Not Found</string>
+    <string name="details_tumbnails">details tumbnails</string>
+    <string name="plot_synopsis">Plot Synopsis</string>
 </resources>

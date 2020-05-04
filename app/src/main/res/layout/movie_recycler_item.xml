@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/movies_grid_card"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:layout_margin="12dp"
-    android:orientation="vertical">
+    android:layout_margin="6dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,8 +17,9 @@
         <ImageView
             android:id="@+id/movie_item_banner_img"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:contentDescription="@string/movie_recycler_item_banner"
+            android:scaleType="fitXY"
             android:src="@color/colorPrimary" />
     </LinearLayout>
 
