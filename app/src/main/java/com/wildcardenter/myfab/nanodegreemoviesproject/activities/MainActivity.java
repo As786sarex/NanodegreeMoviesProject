@@ -10,11 +10,13 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wildcardenter.myfab.nanodegreemoviesproject.R;
 import com.wildcardenter.myfab.nanodegreemoviesproject.adapters.MovieAdapter;
+import com.wildcardenter.myfab.nanodegreemoviesproject.database.FavoriteMoviesViewModel;
 import com.wildcardenter.myfab.nanodegreemoviesproject.models.Movie;
 import com.wildcardenter.myfab.nanodegreemoviesproject.utils.JsonParse;
 import com.wildcardenter.myfab.nanodegreemoviesproject.utils.UrlConnection;
@@ -31,14 +33,18 @@ import static com.wildcardenter.myfab.nanodegreemoviesproject.utils.Constants.MO
 
 public class MainActivity extends AppCompatActivity {
     private List<Movie> movies;
+    private List<Movie> favoriteMovies;
     private MovieAdapter movieAdapter;
     private ProgressBar load_movies_pb;
     private RecyclerView moviesGridRecyclerView;
+    private FavoriteMoviesViewModel favViewModel;
+    private boolean isFavShown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         moviesGridRecyclerView = findViewById(R.id.movies_grid_recycler_view);
         load_movies_pb = findViewById(R.id.load_progressbar);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL,
@@ -53,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(msgIntent);
             }
         });
-
+        favViewModel = new ViewModelProvider(this).get(FavoriteMoviesViewModel.class);
+        favViewModel.getAllFavoriteMovies().observe(this, list -> {
+            favoriteMovies = list;
+            if (isFavShown)
+                movieAdapter.notifyDataSetChanged();
+        });
         new LoadMoviesAsync(this).execute(MOVIES_API_URL + BY_POPULAR + API_KEY_QUERY + API_KEY);
     }
 
@@ -74,10 +85,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sortByMostPopular() {
+        isFavShown = false;
         new LoadMoviesAsync(this).execute(MOVIES_API_URL + BY_POPULAR + API_KEY_QUERY + API_KEY);
     }
 
     private void sortByMostRating() {
+        isFavShown = false;
         new LoadMoviesAsync(this).execute(MOVIES_API_URL + BY_RATING + API_KEY_QUERY + API_KEY);
     }
 
@@ -94,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
             sortByMostPopular();
         } else if (id == R.id.sort_by_rating) {
             sortByMostRating();
+        } else if (id == R.id.show_favorites) {
+            isFavShown = true;
+            refreshMovieList(favoriteMovies);
         }
         return true;
     }

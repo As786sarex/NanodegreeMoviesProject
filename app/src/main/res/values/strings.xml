@@ -6,4 +6,11 @@
     <string name="detail_error_message">Not Found</string>
     <string name="details_tumbnails">details tumbnails</string>
     <string name="plot_synopsis">Plot Synopsis</string>
+    <string name="trailer_thumbnail">trailer thumbnail</string>
+    <string name="movie_trailers">Movie Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="mark_as_favorite">Mark as Favorite</string>
+    <string name="remove_favorite">REMOVE FROM FAVORITE</string>
+    <string name="add_favorite">ADD TO FAVORITE</string>
+    <string name="show_favorites">Show Favorites</string>
 </resources>

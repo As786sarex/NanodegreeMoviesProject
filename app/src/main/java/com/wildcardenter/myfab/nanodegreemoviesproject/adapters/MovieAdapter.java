@@ -79,7 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         ImageView movieItemBannerImg;
         View itemContainer;
 
-        public MovieViewHolder(@NonNull View itemView) {
+        MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             movieItemBannerImg = itemView.findViewById(R.id.movie_item_banner_img);
             itemView.findViewById(R.id.movies_grid_card).setOnClickListener(i -> {
